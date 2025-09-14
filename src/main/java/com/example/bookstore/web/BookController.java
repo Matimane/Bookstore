@@ -24,19 +24,33 @@ public class BookController {
         model.addAttribute("books", bookRepository.findAll());
         return "index";
     }
+
     @GetMapping("/delete/{id}")
     public String deleteBook(@PathVariable Long id) {
         bookRepository.deleteById(id);
         return "redirect:/index";
     }
+
     @RequestMapping(value = "/add")
-    public String addBook(Model model){
+    public String addBook(Model model) {
         model.addAttribute("book", new Book());
         return "addBook";
     }
+
     @PostMapping("/save")
     public String saveBook(@ModelAttribute Book book) {
         bookRepository.save(book);
         return "redirect:/index";
-}
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editBook(@PathVariable Long id, Model model) {
+        Book book = bookRepository.findById(id).orElse(null);
+        if (book != null) {
+            model.addAttribute("book", book);
+            return "editBook";
+        }
+        return "redirect:/index";
+    }
+
 }
