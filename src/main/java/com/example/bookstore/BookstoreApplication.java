@@ -18,28 +18,23 @@ public class BookstoreApplication {
 	}
 
 	@Bean
-	public CommandLineRunner testi(BookRepository repository) {
+	public CommandLineRunner categoryTest(CategoryRepository categoryRepository, BookRepository repository) {
 		return (args) -> {
-			Book b = new Book("Wautsi", "Meitsi", 2025, "123456", 200.00);
-			Book b2 = new Book("Mautsi", "Weitsi", 2502, "654321", 3200.00);
-
-			repository.save(b);
-			repository.save(b2);
-		};
-	}
-
-	@Bean
-	public CommandLineRunner categoryTest(CategoryRepository categoryRepository) {
-		return (args) -> {
-			Category c1 = new Category("Scifi");
-			Category c2 = new Category("Sarjakuva");
+			Category scifi = new Category("Scifi");
+			Category sarjakuva = new Category("Sarjakuva");
 			Category c3 = new Category("Fantasia");
 			Category c4 = new Category("Historia");
-			categoryRepository.save(c1);
-			categoryRepository.save(c2);
+			categoryRepository.save(scifi);
+			categoryRepository.save(sarjakuva);
 			categoryRepository.save(c3);
 			categoryRepository.save(c4);
 			categoryRepository.findAll().forEach(cat -> System.out.println(cat.getName()));
+
+			Book b = new Book("Wautsi", "Meitsi", 2025, "123456", 200.00, sarjakuva);
+			Book b2 = new Book("Mautsi", "Weitsi", 2502, "654321", 3200.00, scifi);
+
+			repository.save(b);
+			repository.save(b2);
 
 		};
 	}
