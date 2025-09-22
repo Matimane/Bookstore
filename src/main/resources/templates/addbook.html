@@ -1,9 +1,11 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>Bookstore</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
+
 <body>
     <h1>Add book</h1>
     <div>
@@ -23,13 +25,21 @@
             <label for="publicationYear">Publication Year</label>
             <input type="text" id="publicationYear" th:field="*{publicationYear}" />
             <div style="clear: both; display: block; height: 10px;"></div>
-            
-			<label for="price">Price</label>
-			<input type="text" id="price" th:field="*{price}" />
-			<div style="clear: both; display: block; height: 10px;"></div>
+
+            <label for="price">Price</label>
+            <input type="text" id="price" th:field="*{price}" />
+            <div style="clear: both; display: block; height: 10px;"></div>
+
+            <label for="category">Category</label>
+            <select id="category" th:field="*{category.categoryid}">
+                <option th:each="c : ${categories}" th:value="${c.categoryid}" th:text="${c.name}"></option>
+            </select>
+
+            <div style="clear: both; display: block; height: 10px;"></div>
 
             <input type="submit" value="Save" />
         </form>
     </div>
 </body>
+
 </html>
