@@ -29,7 +29,7 @@ public class BookController {
         model.addAttribute("books", bookRepository.findAll());
         return "index";
     }
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/delete/{id}")
     public String deleteBook(@PathVariable Long id) {
         bookRepository.deleteById(id);

@@ -4,7 +4,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.example.bookstore.domain.AppUser;
+import com.example.bookstore.domain.AppUserRepository;
 import com.example.bookstore.domain.Book;
 import com.example.bookstore.domain.BookRepository;
 import com.example.bookstore.domain.Category;
@@ -18,7 +22,12 @@ public class BookstoreApplication {
 	}
 
 	@Bean
-	public CommandLineRunner categoryTest(CategoryRepository categoryRepository, BookRepository repository) {
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+
+	@Bean
+	public CommandLineRunner categoryBookTest(CategoryRepository categoryRepository, BookRepository repository) {
 		return (args) -> {
 			Category scifi = new Category("Scifi");
 			Category sarjakuva = new Category("Sarjakuva");
@@ -36,6 +45,14 @@ public class BookstoreApplication {
 			repository.save(b);
 			repository.save(b2);
 
+		};
+	}
+
+	@Bean
+	public CommandLineRunner userTest(AppUserRepository userRepository, PasswordEncoder passwordEncoder) {
+		return (args) -> {
+			userRepository.save(new AppUser("user", passwordEncoder.encode("user"), "USER"));
+			userRepository.save(new AppUser("admin", passwordEncoder.encode("admin"), "ADMIN"));
 		};
 	}
 }
